@@ -1,0 +1,56 @@
+[INFO] NETBEANS-ExecEvent:{"type":"ProjectDiscoveryStarted"}
+[INFO] Scanning for projects...
+[INFO] NETBEANS-ExecEvent:{"mvncoreurls":["file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven-nblib\/netbeans-eventspy.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/conf\/logging\/","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/commons-cli-1.4.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/commons-lang3-3.8.1.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/guava-25.1-android.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/guice-4.2.2-no_aop.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/jansi-2.4.0.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/javax.annotation-api-1.2.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/javax.inject-1.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/jcl-over-slf4j-1.7.36.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-artifact-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-builder-support-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-compat-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-core-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-embedder-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-model-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-model-builder-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-plugin-api-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-repository-metadata-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-api-1.6.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-connector-basic-1.6.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-impl-1.6.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-provider-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-spi-1.6.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-transport-wagon-1.6.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-resolver-util-1.6.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-settings-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-settings-builder-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-shared-utils-3.3.4.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/maven-slf4j-provider-3.8.7.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/org.eclipse.sisu.inject-0.3.5.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/org.eclipse.sisu.plexus-0.3.5.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/plexus-cipher-2.0.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/plexus-component-annotations-2.1.0.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/plexus-interpolation-1.26.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/plexus-sec-dispatcher-2.0.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/plexus-utils-3.3.1.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/slf4j-api-1.7.36.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/wagon-file-3.5.3.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/wagon-http-3.5.3-shaded.jar","file:\/C:\/Program%20Files\/NetBeans-17\/netbeans\/java\/maven\/lib\/wagon-provider-api-3.5.3.jar"],"prjcount":1,"type":"SessionStarted"}
+[INFO] NETBEANS-ExecEvent:{"prj":{"file":"C:\\Users\\alden\\Documents\\NetBeansProjects\\Avaliacao","id":"br.com.aldenor.avaliacao:Avaliacao:1.0-SNAPSHOT"},"type":"ProjectStarted"}
+[INFO] 
+[INFO] -----------------< br.com.aldenor.avaliacao:Avaliacao >-----------------
+[INFO] Building Avaliacao 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] NETBEANS-ExecEvent:{"mojo":{"impl":"org.codehaus.mojo.exec.ExecMojo","goal":"exec","id":"org.codehaus.mojo:exec-maven-plugin:3.1.0","source":"CLI","execId":"default-cli"},"type":"MojoStarted"}
+[INFO] 
+[INFO] --- exec-maven-plugin:3.1.0:exec (default-cli) @ Avaliacao ---
+[ERROR] Command execution failed.
+org.apache.commons.exec.ExecuteException: Process exited with an error: 1 (Exit value: 1)
+    at org.apache.commons.exec.DefaultExecutor.executeInternal (DefaultExecutor.java:404)
+    at org.apache.commons.exec.DefaultExecutor.execute (DefaultExecutor.java:166)
+    at org.codehaus.mojo.exec.ExecMojo.executeCommandLine (ExecMojo.java:1000)
+    at org.codehaus.mojo.exec.ExecMojo.executeCommandLine (ExecMojo.java:947)
+    at org.codehaus.mojo.exec.ExecMojo.execute (ExecMojo.java:471)
+    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:370)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:351)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:215)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:171)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:163)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:81)
+    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:56)
+    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:128)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:298)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:192)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:105)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:960)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:293)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:196)
+    at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:104)
+    at java.lang.reflect.Method.invoke (Method.java:578)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:282)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:225)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:406)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:347)
+[INFO] NETBEANS-ExecEvent:{"exc":{"msg":"Q29tbWFuZCBleGVjdXRpb24gZmFpbGVkLg=="},"mojo":{"impl":"org.codehaus.mojo.exec.ExecMojo","urls":["file:\/C:\/Users\/alden\/.m2\/repository\/org\/codehaus\/mojo\/exec-maven-plugin\/3.1.0\/exec-maven-plugin-3.1.0.jar","file:\/C:\/Users\/alden\/.m2\/repository\/org\/codehaus\/plexus\/plexus-utils\/3.4.2\/plexus-utils-3.4.2.jar","file:\/C:\/Users\/alden\/.m2\/repository\/org\/codehaus\/plexus\/plexus-component-annotations\/2.1.1\/plexus-component-annotations-2.1.1.jar","file:\/C:\/Users\/alden\/.m2\/repository\/org\/apache\/commons\/commons-exec\/1.3\/commons-exec-1.3.jar"],"goal":"exec","id":"org.codehaus.mojo:exec-maven-plugin:3.1.0","source":"CLI","execId":"default-cli"},"type":"MojoFailed"}
+[INFO] NETBEANS-ExecEvent:{"prj":{"file":"C:\\Users\\alden\\Documents\\NetBeansProjects\\Avaliacao","id":"br.com.aldenor.avaliacao:Avaliacao:1.0-SNAPSHOT"},"type":"ProjectFailed"}
+[INFO] NETBEANS-ExecEvent:{"prjcount":1,"type":"SessionEnded"}
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.409 s
+[INFO] Finished at: 2023-05-26T12:40:40-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:3.1.0:exec (default-cli) on project Avaliacao: Command execution failed.: Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
