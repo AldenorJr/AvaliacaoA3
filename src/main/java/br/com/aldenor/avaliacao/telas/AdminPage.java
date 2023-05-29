@@ -7,6 +7,8 @@ package br.com.aldenor.avaliacao.telas;
 import br.com.aldenor.avaliacao.Main;
 import br.com.aldenor.avaliacao.database.DatabaseMethod;
 import br.com.aldenor.avaliacao.model.Balconista;
+import br.com.aldenor.avaliacao.util.Limitador_caracteres;
+import static br.com.aldenor.avaliacao.util.Limitador_caracteres.Tipo_dado_Entrada.CPF;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import lombok.SneakyThrows;
 
 /**
  *
@@ -38,6 +41,10 @@ public class AdminPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sistema de gestão");
+        cpf.setDocument(new Limitador_caracteres(11, Limitador_caracteres.Tipo_dado_Entrada.CPF));
+        dias.setDocument(new Limitador_caracteres(2, Limitador_caracteres.Tipo_dado_Entrada.DIA));
+        mes.setDocument(new Limitador_caracteres(2, Limitador_caracteres.Tipo_dado_Entrada.MES));
+        ano.setDocument(new Limitador_caracteres(4, Limitador_caracteres.Tipo_dado_Entrada.ANO));
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -63,6 +70,7 @@ public class AdminPage extends javax.swing.JFrame {
         return (String) this.turnos.getSelectedItem();
     }
     
+    @SneakyThrows
     public void addTable(String turno) throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) table.getModel();
         modelo.setNumRows(0);
@@ -70,9 +78,18 @@ public class AdminPage extends javax.swing.JFrame {
                 PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
             try(ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
+                    SimpleDateFormat  sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     if(rs.getString("Turno").equalsIgnoreCase(turno) || turno.equalsIgnoreCase("Todos")) {
-                        modelo.addRow(new Object[]{rs.getInt("ID"), rs.getString("Nome"), rs.getString("CPF"), 
-                            rs.getString("DataNascimento"), rs.getString("turno"), rs.getString("Caixa")});
+                        Balconista balconista = new Balconista(rs.getString("Caixa"), 
+                                rs.getString("turno"), 
+                                rs.getString("CPF"), 
+                                rs.getString("Nome"), 
+                                rs.getString("userName"), 
+                                rs.getString("Password"), 
+                                displayDateFormat.format(sqlDateFormat.parse(rs.getString("DataNascimento"))));
+                        modelo.addRow(new Object[]{rs.getInt("ID"), balconista.getNome(), balconista.getCPF(), 
+                            balconista.getIdade(), balconista.getTurno(), balconista.getCaixa()});
                     }
                 }
             }
@@ -394,13 +411,14 @@ public class AdminPage extends javax.swing.JFrame {
                             .addGap(23, 23, 23)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(turnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Delete2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(Update)
                                     .addComponent(Delete)
-                                    .addComponent(Delete1))))
+                                    .addComponent(Delete1))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(turnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Delete2))))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(close)))
@@ -476,6 +494,14 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
             Balconista balconista = new Balconista(caixaString, turno, CPF, nome, user, pass, date);
+            if(balconista.getIdade() < 16 || balconista.getIdade() > 60) {
+                JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito , ou muito nova, a idade tem que ser entre 16 à 60 anos. Idade: "+balconista.getIdade()+".", "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if(!balconista.isValid()) {
+                JOptionPane.showInternalMessageDialog(null, "CPF informado consta como incorreto, tente novamente.", "CPF invalido...", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             new DatabaseMethod(Main.hikariConnect.getConnection()).setFuncionario(balconista);
             System.out.println("Balconista: " + balconista.getNome() + " cadastrado no banco de dados.");
             updateTable();

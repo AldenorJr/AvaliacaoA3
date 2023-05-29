@@ -80,8 +80,7 @@ public class DatabaseMethod {
     }
     
     public void clearCaixas() throws SQLException {
-        try(Connection connection = Main.hikariConnect.getConnection(); 
-                PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
             try(ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
                     new DatabaseMethod(Main.hikariConnect.getConnection()).updateCaixaInformation("Vago", rs.getInt("ID"));
@@ -93,8 +92,7 @@ public class DatabaseMethod {
     }
     
     public void clearCaixas(String turno) throws SQLException {
-        try(Connection connection = Main.hikariConnect.getConnection(); 
-                PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
             try(ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
                     if(rs.getString("Turno").equalsIgnoreCase(turno) || turno.equalsIgnoreCase("todos")) {
