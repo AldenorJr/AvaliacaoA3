@@ -25,18 +25,22 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         System.out.println("Iniciando banco de dados.");
         hikariConnect.MySQLConnectLoad("127.0.0.1", "test", "root", "");
-        new DatabaseMethod(hikariConnect.getConnection()).createTableFuncionario();
-        new DatabaseMethod(hikariConnect.getConnection()).createTableAdminstrador();
+        DatabaseMethod databaseMethod = new DatabaseMethod();
+        databaseMethod.createTableFuncionario();
+        databaseMethod.createTableAdminstrador();
         if(generationDefaultAdmin) generationDefaultAccountAdmin();
         System.out.println("Tabelas carregadas.");
         System.out.println("Carregando tela incial...");
         LoginPage.startLoginPage();
+        databaseMethod.closeConnection();
     }
     
     public static void generationDefaultAccountAdmin() throws SQLException {
-        if(!new DatabaseMethod(hikariConnect.getConnection()).hasUsernameAdminstradorAccount("admin")) {
+        DatabaseMethod databaseMethod = new DatabaseMethod();
+        if(!databaseMethod.hasUsernameAdminstradorAccount("admin")) {
             Adminstrador admin = new Adminstrador("Admin", "Admin", "Admin", "Admin", "16/09/2004");
-            new DatabaseMethod(hikariConnect.getConnection()).setAdminstradores(admin);
+            databaseMethod.setAdminstradores(admin);
         }
+        databaseMethod.closeConnection();
     }
 }

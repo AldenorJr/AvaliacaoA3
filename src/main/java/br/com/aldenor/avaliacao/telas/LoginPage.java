@@ -6,6 +6,8 @@ package br.com.aldenor.avaliacao.telas;
 
 import br.com.aldenor.avaliacao.Main;
 import br.com.aldenor.avaliacao.database.DatabaseMethod;
+import lombok.SneakyThrows;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -13,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
  * @author alden
  */
 public class LoginPage extends javax.swing.JFrame {
@@ -35,7 +36,7 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,84 +120,84 @@ public class LoginPage extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(isAdmin)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(buttonLogar))
-                            .addComponent(passwordWrite, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userNameWrite))
-                        .addGap(113, 113, 113))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tilteName)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(isAdmin)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(buttonLogar))
+                                                        .addComponent(passwordWrite, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(userNameWrite))
+                                                .addGap(113, 113, 113))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(tilteName)
+                                                        .addComponent(jLabel2))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(tilteName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userNameWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(isAdmin)
-                    .addComponent(buttonLogar))
-                .addContainerGap(74, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(tilteName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(userNameWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passwordWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(isAdmin)
+                                        .addComponent(buttonLogar))
+                                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @SneakyThrows
     private void buttonLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogarActionPerformed
+        DatabaseMethod databaseMethod = new DatabaseMethod();
         String userName = userNameWrite.getText();
         String password = passwordWrite.getText();
-        if(userName.isEmpty() || password.isEmpty()) {
+        if (userName.isEmpty() || password.isEmpty()) {
             JOptionPane.showInternalMessageDialog(null, "O usuário ou a senha estão vazias.", "Dados incorretos", JOptionPane.ERROR_MESSAGE);
             return;
         }
         boolean hasAccount = false;
         boolean accountIsAdmin = isAdmin.isSelected();
-        try {
-            
-            if(accountIsAdmin) hasAccount = new DatabaseMethod(Main.hikariConnect.getConnection()).hasAdminstradoresAccount(userName, password);
-            else hasAccount = new DatabaseMethod(Main.hikariConnect.getConnection()).hasFuncionarioAccount(userName, password);
-            
-            if(accountIsAdmin && hasAccount) Main.pessoaAccount = new DatabaseMethod(Main.hikariConnect.getConnection()).getAdminstradorAccount(userName, password);
-            else if(!accountIsAdmin && hasAccount) Main.pessoaAccount = new DatabaseMethod(Main.hikariConnect.getConnection()).getBalconistaAccount(userName, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if(!hasAccount) {
+
+        if (accountIsAdmin) hasAccount = databaseMethod.hasAdminstradoresAccount(userName, password);
+        else hasAccount = databaseMethod.hasFuncionarioAccount(userName, password);
+
+        if (accountIsAdmin && hasAccount)
+            Main.pessoaAccount = databaseMethod.getAdminstradorAccount(userName, password);
+        else if (!accountIsAdmin && hasAccount)
+            Main.pessoaAccount = databaseMethod.getBalconistaAccount(userName, password);
+        if (!hasAccount) {
             JOptionPane.showInternalMessageDialog(null, "O username ou senha está incorreto.", "Dados incorretos", JOptionPane.ERROR_MESSAGE);
             return;
         }
         dispose();
-        if(accountIsAdmin && hasAccount) {
+        if (accountIsAdmin) {
             System.out.println("Carregando a tela de Adminstrador...");
             AdminPage.startAdminPage();
         } else {
             System.out.println("Carregando a tela do Caixa...");
             CaixasPage.StartCaixaPage();
         }
-        
-        
+
+
     }//GEN-LAST:event_buttonLogarActionPerformed
 
     private void userNameWriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameWriteActionPerformed
@@ -210,7 +211,7 @@ public class LoginPage extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

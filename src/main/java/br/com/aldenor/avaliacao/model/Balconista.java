@@ -22,7 +22,7 @@ public class Balconista extends Pessoa{
         this.caixa = caixa;
         this.turno = turno;
     }
-
+    private int ID;
     private String caixa;
     private String turno;
     

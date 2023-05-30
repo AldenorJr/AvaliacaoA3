@@ -152,9 +152,6 @@ public class CaixasPage extends javax.swing.JFrame {
         LoginPage.startLoginPage();
     }//GEN-LAST:event_fecharActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void StartCaixaPage() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -13,33 +13,65 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.aldenor.avaliacao.service.Service;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 /**
  *
  * @author alden
  */
-@RequiredArgsConstructor
 public class DatabaseMethod {
 
     private final Connection connection;
+
+    public DatabaseMethod() {
+        this.connection = Main.hikariConnect.getConnection();
+    }
+    @SneakyThrows
+    public void closeConnection() {
+        connection.close();
+    }
 
     public void createTableFuncionario() throws SQLException {
         try(PreparedStatement stm = connection.prepareStatement("CREATE TABLE IF NOT EXISTS "
                 + "`Funcionarios`(`ID` SERIAL PRIMARY KEY,`Caixa` VARCHAR(20), `Turno` VARCHAR(20) NOT NULL, `CPF` VARCHAR(11) NOT NULL, "
                 + "`Nome` VARCHAR(40) NOT NULL, `userName` VARCHAR(20) NOT NULL, `Password` VARCHAR(20) NOT NULL, `DataNascimento` DATE NOT NULL)")) {
             stm.executeUpdate();
-            connection.close();
         }
     }
-    
+
+    @SneakyThrows
+    public List<Pessoa> getAllCadastrosBalconistas() {
+        ArrayList<Pessoa> list = new ArrayList<>();
+        Service service = new Service();
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
+            try(ResultSet rs = stm.executeQuery()) {
+                while(rs.next()) {
+                    Balconista balconista = new Balconista(rs.getString("Caixa"),
+                            rs.getString("turno"),
+                            rs.getString("CPF"),
+                            rs.getString("Nome"),
+                            rs.getString("userName"),
+                            rs.getString("Password"),
+                            service.getDate(rs.getString("DataNascimento")));
+                    balconista.setID(rs.getInt("ID"));
+                    list.add(balconista);
+                }
+            }
+        }
+        return list;
+    }
     public void createTableAdminstrador() throws SQLException {
         try(PreparedStatement stm = connection.prepareStatement("CREATE TABLE IF NOT EXISTS "
                 + "`Adminstrador`(`ID` SERIAL PRIMARY KEY, `CPF` VARCHAR(11) NOT NULL, "
                 + "`Nome` VARCHAR(40) NOT NULL, `userName` VARCHAR(20) NOT NULL, `Password` VARCHAR(20) NOT NULL, `DataNascimento` DATE NOT NULL)")) {
             stm.executeUpdate();
-            connection.close();
         }
     }
     
@@ -50,8 +82,6 @@ public class DatabaseMethod {
             stm.setString(3, turno);
             stm.setInt(4, ID);
             stm.executeUpdate();
-        } finally {
-            connection.close();
         }
     }
     
@@ -64,8 +94,6 @@ public class DatabaseMethod {
             stm.setString(5, balconista.getTurno());
             stm.setString(6, balconista.getCPF());
             stm.executeUpdate();
-        } finally {
-            connection.close();
         }
     }
     
@@ -74,8 +102,6 @@ public class DatabaseMethod {
             stm.setString(1, caixa);
             stm.setInt(2, ID);
             stm.executeUpdate();
-        } finally {
-            connection.close();
         }
     }
     
@@ -83,10 +109,8 @@ public class DatabaseMethod {
         try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
             try(ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
-                    new DatabaseMethod(Main.hikariConnect.getConnection()).updateCaixaInformation("Vago", rs.getInt("ID"));
+                    updateCaixaInformation("Vago", rs.getInt("ID"));
                 }
-            } finally {
-                connection.close();
             }
         }
     }
@@ -96,11 +120,9 @@ public class DatabaseMethod {
             try(ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
                     if(rs.getString("Turno").equalsIgnoreCase(turno) || turno.equalsIgnoreCase("todos")) {
-                        new DatabaseMethod(Main.hikariConnect.getConnection()).updateCaixaInformation("Vago", rs.getInt("ID"));
+                       updateCaixaInformation("Vago", rs.getInt("ID"));
                     }
                 }
-            } finally {
-                connection.close();
             }
         }
     }
@@ -116,7 +138,6 @@ public class DatabaseMethod {
             stm.setString(6, balconista.getPassword());
             stm.setDate(7, new Date(balconista.getDateNascimento().getTime()));
             stm.executeUpdate();
-            connection.close();
         }
     }
     
@@ -129,7 +150,6 @@ public class DatabaseMethod {
             stm.setString(4, adminstrador.getPassword());
             stm.setDate(5, new Date(adminstrador.getDateNascimento().getTime()));
             stm.executeUpdate();
-            connection.close();
         }
     }
     
@@ -139,8 +159,6 @@ public class DatabaseMethod {
             stm.setString(2, password);
             try(ResultSet rs = stm.executeQuery()) {
                 return rs.next();
-            } finally {
-                connection.close();
             }
         }
     }
@@ -157,8 +175,6 @@ public class DatabaseMethod {
                         rs.getString("userName"), 
                         rs.getString("Password"), 
                         df.format(rs.getDate("DataNascimento")));
-            } finally {
-                connection.close();
             }
         }
     }
@@ -167,7 +183,6 @@ public class DatabaseMethod {
          try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `Funcionarios` WHERE `ID` = ?;")) {
             preparedStatement.setInt(1, ID);
             preparedStatement.executeUpdate();
-            connection.close();
         }
     }
     
@@ -185,8 +200,6 @@ public class DatabaseMethod {
                         rs.getString("userName"), 
                         rs.getString("Password"), 
                         df.format(rs.getDate("DataNascimento")));
-            } finally {
-                connection.close();
             }
         }
     }
@@ -197,8 +210,6 @@ public class DatabaseMethod {
             stm.setString(2, password);
             try(ResultSet rs = stm.executeQuery()) {
                 return rs.next();
-            } finally {
-                connection.close();
             }
         }
     }
@@ -208,8 +219,6 @@ public class DatabaseMethod {
             stm.setString(1, username);
             try(ResultSet rs = stm.executeQuery()) {
                 return rs.next();
-            } finally {
-                connection.close();
             }
         }
     }
