@@ -196,8 +196,7 @@ public class LoginPage extends javax.swing.JFrame {
             System.out.println("Carregando a tela do Caixa...");
             CaixasPage.StartCaixaPage();
         }
-
-
+        databaseMethod.closeConnection();
     }//GEN-LAST:event_buttonLogarActionPerformed
 
     private void userNameWriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameWriteActionPerformed

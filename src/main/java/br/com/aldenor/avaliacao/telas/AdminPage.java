@@ -492,7 +492,8 @@ public class AdminPage extends javax.swing.JFrame {
         DatabaseMethod databaseMethod = new DatabaseMethod();
         databaseMethod.updateAccountInformation(ID, name, caixas, turno);
         System.out.println("Balconista com ID: " + ID + " teve seu nome e caixa atualizados.");
-
+        databaseMethod.closeConnection();
+        
         service.updateTableCaixa(table, turnoSelected());
     }//GEN-LAST:event_UpdateActionPerformed
 
