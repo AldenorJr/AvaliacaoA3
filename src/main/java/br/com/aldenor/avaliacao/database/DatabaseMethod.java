@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.aldenor.avaliacao.service.Service;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
@@ -33,15 +35,19 @@ public class DatabaseMethod {
     public DatabaseMethod() {
         this.connection = Main.hikariConnect.getConnection();
     }
+    
     @SneakyThrows
     public void closeConnection() {
         connection.close();
     }
 
-    public void createTableFuncionario() throws SQLException {
+    @SneakyThrows
+    public void createTableFuncionario() {
         try(PreparedStatement stm = connection.prepareStatement("CREATE TABLE IF NOT EXISTS "
-                + "`Funcionarios`(`ID` SERIAL PRIMARY KEY,`Caixa` VARCHAR(20), `Turno` VARCHAR(20) NOT NULL, `CPF` VARCHAR(11) NOT NULL, "
-                + "`Nome` VARCHAR(40) NOT NULL, `userName` VARCHAR(20) NOT NULL, `Password` VARCHAR(20) NOT NULL, `DataNascimento` DATE NOT NULL)")) {
+                + "`Funcionarios`(`ID` SERIAL PRIMARY KEY,`Caixa` VARCHAR(20), "
+                + "`Turno` VARCHAR(20) NOT NULL, `CPF` VARCHAR(11) NOT NULL, "
+                + "`Nome` VARCHAR(40) NOT NULL, `userName` VARCHAR(20) NOT NULL, "
+                + "`Password` VARCHAR(20) NOT NULL, `DataNascimento` DATE NOT NULL)")) {
             stm.executeUpdate();
         }
     }
@@ -67,9 +73,11 @@ public class DatabaseMethod {
         }
         return list;
     }
-    public void createTableAdminstrador() throws SQLException {
+    
+    @SneakyThrows
+    public void createTableAdminstrador() {
         try(PreparedStatement stm = connection.prepareStatement("CREATE TABLE IF NOT EXISTS "
-                + "`Adminstrador`(`ID` SERIAL PRIMARY KEY, `CPF` VARCHAR(11) NOT NULL, "
+                + "`Administrador`(`ID` SERIAL PRIMARY KEY, `CPF` VARCHAR(11) NOT NULL, "
                 + "`Nome` VARCHAR(40) NOT NULL, `userName` VARCHAR(20) NOT NULL, `Password` VARCHAR(20) NOT NULL, `DataNascimento` DATE NOT NULL)")) {
             stm.executeUpdate();
         }
@@ -142,7 +150,7 @@ public class DatabaseMethod {
     }
     
     public void setAdminstradores(Adminstrador adminstrador) throws SQLException {
-        try(PreparedStatement stm = connection.prepareStatement("INSERT INTO `Adminstrador` (`CPF`, `Nome`, `userName`, `Password`, `DataNascimento`)"
+        try(PreparedStatement stm = connection.prepareStatement("INSERT INTO `Administrador` (`CPF`, `Nome`, `userName`, `Password`, `DataNascimento`)"
                 + " VALUES(?, ?, ?, ?, ?)")) {
             stm.setString(1, adminstrador.getCPF());
             stm.setString(2, adminstrador.getNome());
@@ -162,9 +170,27 @@ public class DatabaseMethod {
             }
         }
     }
+
+    public boolean hasFuncionarioAccountByCPF(String cpf) throws SQLException {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios` WHERE `CPF` = ?;")) {
+            stm.setString(1, cpf);
+            try(ResultSet rs = stm.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean hasFuncionarioAccountByUserName(String username) throws SQLException {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios` WHERE `userName` = ?;")) {
+            stm.setString(1, username);
+            try(ResultSet rs = stm.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
     
     public Adminstrador getAdminstradorAccount(String username, String password) throws SQLException {
-        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Adminstrador` WHERE `userName` = ? AND `Password` = ?;")) {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `userName` = ? AND `Password` = ?;")) {
             stm.setString(1, username);
             stm.setString(2, password);
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -205,7 +231,7 @@ public class DatabaseMethod {
     }
     
     public boolean hasAdminstradoresAccount(String username, String password) throws SQLException {
-        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Adminstrador` WHERE `userName` = ? AND `Password` = ?;")) {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `userName` = ? AND `Password` = ?;")) {
             stm.setString(1, username);
             stm.setString(2, password);
             try(ResultSet rs = stm.executeQuery()) {
@@ -215,7 +241,7 @@ public class DatabaseMethod {
     }
     
     public boolean hasUsernameAdminstradorAccount(String username) throws SQLException {
-        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Adminstrador` WHERE `userName` = ?;")) {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `userName` = ?;")) {
             stm.setString(1, username);
             try(ResultSet rs = stm.executeQuery()) {
                 return rs.next();

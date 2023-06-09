@@ -26,7 +26,7 @@ public class HikariConnect {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         config.setUsername(username);
         config.setPassword(password);
-        this.hikariDataSource = new HikariDataSource(config);
+        hikariDataSource = new HikariDataSource(config);
     }
 
     public void closeHikariDataSource() {
