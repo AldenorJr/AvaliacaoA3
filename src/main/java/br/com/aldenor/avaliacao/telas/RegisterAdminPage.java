@@ -7,6 +7,7 @@ package br.com.aldenor.avaliacao.telas;
 import br.com.aldenor.avaliacao.database.DatabaseMethod;
 import br.com.aldenor.avaliacao.model.Administrador;
 import br.com.aldenor.avaliacao.service.ServiceAdminstrador;
+import br.com.aldenor.avaliacao.util.Limitador_caracteres;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import lombok.SneakyThrows;
@@ -28,6 +29,10 @@ public class RegisterAdminPage extends javax.swing.JDialog {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
         setTitle("Sistema de gestão");
+        cpf.setDocument(new Limitador_caracteres(11, Limitador_caracteres.Tipo_dado_Entrada.CPF));
+        dias.setDocument(new Limitador_caracteres(2, Limitador_caracteres.Tipo_dado_Entrada.DIA));
+        meses.setDocument(new Limitador_caracteres(2, Limitador_caracteres.Tipo_dado_Entrada.MES));
+        anos.setDocument(new Limitador_caracteres(4, Limitador_caracteres.Tipo_dado_Entrada.ANO));
         this.serviceAdminstrador = new ServiceAdminstrador();
         serviceAdminstrador.updateTableCaixa(table);
     }
@@ -699,9 +704,14 @@ public class RegisterAdminPage extends javax.swing.JDialog {
             JOptionPane.showInternalMessageDialog(null, "Responda todos os dados.", "Faltando dados...", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(name.length() > 39 || user.length() > 19 || password.length() > 19) {
+            JOptionPane.showInternalMessageDialog(null, "O nome é maior que 40 caracters, ou 20 caracters no username ou senha.","Dados incorretos. ", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Administrador administrador = new Administrador(CPF, name, user, password, date);
         if (administrador.getIdade() < 16 || administrador.getIdade() > 70) {
-            JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 16 à 70 anos. Idade: " + administrador.getIdade() + ".", "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 16 à 70 anos. Idade: " + administrador.getIdade() + ".", 
+                    "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (!administrador.isValid()) {

@@ -55,7 +55,8 @@ public class ServiceBalconista {
         return (DefaultTableModel) table.getModel();
     }
 
-    public String getDate(String date) throws ParseException {
+    @SneakyThrows
+    public String getDate(String date) {
         SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return displayDateFormat.format(sqlDateFormat.parse(date));

@@ -463,6 +463,10 @@ public class AdminPage extends javax.swing.JFrame {
             JOptionPane.showInternalMessageDialog(null, "Responda todos os dados.", "Faltando dados...", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(nome.length() > 39 || user.length() > 19 || pass.length() > 19) {
+            JOptionPane.showInternalMessageDialog(null, "O nome é maior que 40 caracters, ou 20 caracters no username ou senha.","Dados incorretos. ", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Balconista balconista = new Balconista(caixaString, turno, CPF, nome, user, pass, date);
         if (balconista.getIdade() < 16 || balconista.getIdade() > 70) {
             JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 16 à 70 anos. Idade: " + balconista.getIdade() + ".", "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
@@ -514,11 +518,22 @@ public class AdminPage extends javax.swing.JFrame {
             String caixas = (String) table.getValueAt(index, 5);
 
             DatabaseMethod databaseMethod = new DatabaseMethod();
+            if(databaseMethod.hasCaixaInTurno(caixas, turno)) {
+                if(databaseMethod.getFuncionarioOfCaixaAndTurno(caixas, turno).getID() == ID) {
+                    JOptionPane.showInternalMessageDialog(null, "Este funcionário já está nesse caixa.", "Dados incorretos...", JOptionPane.WARNING_MESSAGE);
+                    databaseMethod.closeConnection();
+                    return;
+                }
+                JOptionPane.showInternalMessageDialog(null, "Já há um caixa cadastrado nesse turno.", "Dados incorretos...", JOptionPane.WARNING_MESSAGE);
+                service.updateTableCaixa(table, turnoSelected());
+                databaseMethod.closeConnection();
+                return;
+            }
             databaseMethod.updateAccountInformation(ID, name, caixas, turno);
             System.out.println("Balconista com ID: " + ID + " teve seu nome e caixa atualizados.");
             databaseMethod.closeConnection();
-        
             service.updateTableCaixa(table, turnoSelected());
+            JOptionPane.showInternalMessageDialog(null, "Caixa atualizado com sucesso.", "Sucesso", JOptionPane.YES_NO_CANCEL_OPTION);
         } catch (Exception ignored) { 
             JOptionPane.showInternalMessageDialog(null, "Informe qual linha deve ser atualizada.", "Faltando dados...", JOptionPane.WARNING_MESSAGE);
         }

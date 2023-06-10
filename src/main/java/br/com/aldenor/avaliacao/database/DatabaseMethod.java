@@ -217,6 +217,37 @@ public class DatabaseMethod {
             }
         }
     }
+    
+    public boolean hasCaixaInTurno(String caixa, String turno) throws SQLException {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios` WHERE `Caixa` = ? AND `Turno` = ?;")) {
+            stm.setString(1, caixa);
+            stm.setString(2, turno);
+            try(ResultSet rs = stm.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+    
+    public Balconista getFuncionarioOfCaixaAndTurno(String caixa, String turno) throws SQLException {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios` WHERE `Caixa` = ? AND `Turno` = ?;")) {
+            stm.setString(1, caixa);
+            stm.setString(2, turno);
+            try(ResultSet rs = stm.executeQuery()) {
+                rs.next();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Balconista balconista = new Balconista(rs.getString("Caixa"), 
+                        rs.getString("Turno"), 
+                        rs.getString("CPF"), 
+                        rs.getString("Nome"), 
+                        rs.getString("userName"), 
+                        rs.getString("Password"), 
+                        df.format(rs.getDate("DataNascimento")));
+                balconista.setID(rs.getInt("ID"));
+                return balconista;
+                
+            }
+        }
+    }
 
     public boolean hasFuncionarioAccountByUserName(String username) throws SQLException {
         try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios` WHERE `userName` = ?;")) {

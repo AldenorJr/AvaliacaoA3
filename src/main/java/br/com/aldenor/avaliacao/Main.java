@@ -22,7 +22,8 @@ public class Main {
     public static Pessoa pessoaAccount = null;
     private static boolean generationDefaultAdmin = true;
     
-    public static void main(String[] args) throws SQLException {
+    @SneakyThrows
+    public static void main(String[] args) {
         System.out.println("Iniciando banco de dados.");
         hikariConnect.MySQLConnectLoad("127.0.0.1:3306", "test", "root", "");
         DatabaseMethod databaseMethod = new DatabaseMethod();

@@ -180,6 +180,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="passwordWrite">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordWriteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="isAdmin">
       <Properties>

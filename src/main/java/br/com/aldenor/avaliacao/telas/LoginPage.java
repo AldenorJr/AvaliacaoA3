@@ -112,6 +112,12 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Password:");
 
+        passwordWrite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordWriteActionPerformed(evt);
+            }
+        });
+
         isAdmin.setText("Adminstrador");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -120,46 +126,46 @@ public class LoginPage extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(116, 116, 116)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(isAdmin)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(buttonLogar))
-                                                        .addComponent(passwordWrite, javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(userNameWrite))
-                                                .addGap(113, 113, 113))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(tilteName)
-                                                        .addComponent(jLabel2))
-                                                .addGap(0, 0, Short.MAX_VALUE))))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(isAdmin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonLogar))
+                            .addComponent(passwordWrite, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userNameWrite))
+                        .addGap(113, 113, 113))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tilteName)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addComponent(tilteName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(userNameWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passwordWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(isAdmin)
-                                        .addComponent(buttonLogar))
-                                .addContainerGap(74, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(tilteName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userNameWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(passwordWrite, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isAdmin)
+                    .addComponent(buttonLogar))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,7 +173,6 @@ public class LoginPage extends javax.swing.JFrame {
 
     @SneakyThrows
     private void buttonLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogarActionPerformed
-        DatabaseMethod databaseMethod = new DatabaseMethod();
         String userName = userNameWrite.getText();
         String password = passwordWrite.getText();
         if (userName.isEmpty() || password.isEmpty()) {
@@ -176,16 +181,18 @@ public class LoginPage extends javax.swing.JFrame {
         }
         boolean hasAccount = false;
         boolean accountIsAdmin = isAdmin.isSelected();
-
+        DatabaseMethod databaseMethod = new DatabaseMethod();
+        
         if (accountIsAdmin) hasAccount = databaseMethod.hasAdminstradoresAccount(userName, password);
         else hasAccount = databaseMethod.hasFuncionarioAccount(userName, password);
-
+        
         if (accountIsAdmin && hasAccount)
             Main.pessoaAccount = databaseMethod.getAdminstradorAccount(userName, password);
         else if (!accountIsAdmin && hasAccount)
             Main.pessoaAccount = databaseMethod.getBalconistaAccount(userName, password);
         if (!hasAccount) {
             JOptionPane.showInternalMessageDialog(null, "O username ou senha está incorreto.", "Dados incorretos", JOptionPane.ERROR_MESSAGE);
+            databaseMethod.closeConnection();
             return;
         }
         dispose();
@@ -202,6 +209,10 @@ public class LoginPage extends javax.swing.JFrame {
     private void userNameWriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameWriteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userNameWriteActionPerformed
+
+    private void passwordWriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordWriteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordWriteActionPerformed
 
     /**
      * @param args the command line arguments
