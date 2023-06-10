@@ -5,7 +5,7 @@
 package br.com.aldenor.avaliacao.database;
 
 import br.com.aldenor.avaliacao.Main;
-import br.com.aldenor.avaliacao.model.Adminstrador;
+import br.com.aldenor.avaliacao.model.Administrador;
 import br.com.aldenor.avaliacao.model.Balconista;
 import br.com.aldenor.avaliacao.model.Pessoa;
 import java.sql.Connection;
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.aldenor.avaliacao.service.Service;
+import br.com.aldenor.avaliacao.service.ServiceBalconista;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ public class DatabaseMethod {
     @SneakyThrows
     public List<Pessoa> getAllCadastrosBalconistas() {
         ArrayList<Pessoa> list = new ArrayList<>();
-        Service service = new Service();
+        ServiceBalconista service = new ServiceBalconista();
         try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios`")) {
             try(ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
@@ -68,6 +68,27 @@ public class DatabaseMethod {
                             service.getDate(rs.getString("DataNascimento")));
                     balconista.setID(rs.getInt("ID"));
                     list.add(balconista);
+                }
+            }
+        }
+        return list;
+    }
+
+    @SneakyThrows
+    public List<Pessoa> getAllCadastrosAdministrador() {
+        ArrayList<Pessoa> list = new ArrayList<>();
+        ServiceBalconista service = new ServiceBalconista();
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador`")) {
+            try(ResultSet rs = stm.executeQuery()) {
+                while(rs.next()) {
+                    Administrador administrador = new Administrador(
+                            rs.getString("CPF"),
+                            rs.getString("Nome"),
+                            rs.getString("userName"),
+                            rs.getString("Password"),
+                            service.getDate(rs.getString("DataNascimento")));
+                    administrador.setID(rs.getInt("ID"));
+                    list.add(administrador);
                 }
             }
         }
@@ -101,6 +122,14 @@ public class DatabaseMethod {
             stm.setString(4, balconista.getUserName());
             stm.setString(5, balconista.getTurno());
             stm.setString(6, balconista.getCPF());
+            stm.executeUpdate();
+        }
+    }
+    
+    public void updateAccountAdministradorInformation(int id, String name) throws SQLException {
+        try (PreparedStatement stm = connection.prepareStatement("UPDATE `Administrador` SET `Nome` = ? WHERE `ID` = ?")){
+            stm.setString(1, name);
+            stm.setInt(2, id);
             stm.executeUpdate();
         }
     }
@@ -149,7 +178,7 @@ public class DatabaseMethod {
         }
     }
     
-    public void setAdminstradores(Adminstrador adminstrador) throws SQLException {
+    public void setAdminstradores(Administrador adminstrador) throws SQLException {
         try(PreparedStatement stm = connection.prepareStatement("INSERT INTO `Administrador` (`CPF`, `Nome`, `userName`, `Password`, `DataNascimento`)"
                 + " VALUES(?, ?, ?, ?, ?)")) {
             stm.setString(1, adminstrador.getCPF());
@@ -179,6 +208,15 @@ public class DatabaseMethod {
             }
         }
     }
+    
+    public boolean hasAdministradorAccountByCPF(String cpf) throws SQLException {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `CPF` = ?;")) {
+            stm.setString(1, cpf);
+            try(ResultSet rs = stm.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
 
     public boolean hasFuncionarioAccountByUserName(String username) throws SQLException {
         try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Funcionarios` WHERE `userName` = ?;")) {
@@ -189,14 +227,23 @@ public class DatabaseMethod {
         }
     }
     
-    public Adminstrador getAdminstradorAccount(String username, String password) throws SQLException {
+    public boolean hasAdministradorAccountByUserName(String username) throws SQLException {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `userName` = ?;")) {
+            stm.setString(1, username);
+            try(ResultSet rs = stm.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+    
+    public Administrador getAdminstradorAccount(String username, String password) throws SQLException {
         try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `userName` = ? AND `Password` = ?;")) {
             stm.setString(1, username);
             stm.setString(2, password);
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             try(ResultSet rs = stm.executeQuery()) {
                 rs.next();
-                return new Adminstrador(rs.getString("CPF"), 
+                return new Administrador(rs.getString("CPF"), 
                         rs.getString("Nome"), 
                         rs.getString("userName"), 
                         rs.getString("Password"), 
@@ -205,8 +252,17 @@ public class DatabaseMethod {
         }
     }
     
-    public void deleteBalconistaByID(int ID) throws SQLException {
+    @SneakyThrows
+    public void deleteBalconistaByID(int ID) {
          try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `Funcionarios` WHERE `ID` = ?;")) {
+            preparedStatement.setInt(1, ID);
+            preparedStatement.executeUpdate();
+        }
+    }
+    
+    @SneakyThrows
+    public void deleteAdministradorByID(int ID) {
+         try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `Administrador` WHERE `ID` = ?;")) {
             preparedStatement.setInt(1, ID);
             preparedStatement.executeUpdate();
         }
@@ -231,7 +287,8 @@ public class DatabaseMethod {
     }
     
     public boolean hasAdminstradoresAccount(String username, String password) throws SQLException {
-        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM `Administrador` WHERE `userName` = ? AND `Password` = ?;")) {
+        try(PreparedStatement stm = connection.prepareStatement("SELECT * FROM "
+                + "`Administrador` WHERE `userName` = ? AND `Password` = ?;")) {
             stm.setString(1, username);
             stm.setString(2, password);
             try(ResultSet rs = stm.executeQuery()) {

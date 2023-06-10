@@ -5,15 +5,20 @@
 package br.com.aldenor.avaliacao.model;
 
 import java.sql.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author alden
  */
-public class Adminstrador extends Pessoa {
+@Getter @Setter
+public class Administrador extends Pessoa {
 
-    public Adminstrador(String CPF, String nome, String userName, String password, String dateNascimento) {
+    public Administrador(String CPF, String nome, String userName, String password, String dateNascimento) {
         super(CPF, nome, userName, password, dateNascimento);
     }
+    
+    private int ID;
 
 }

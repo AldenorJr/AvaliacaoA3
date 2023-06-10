@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author alden
  */
-public class Service {
+public class ServiceBalconista {
     
     public void clearTable(JTable table) {
         DefaultTableModel model = getDefaultTableModel(table);

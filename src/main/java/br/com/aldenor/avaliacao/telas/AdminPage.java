@@ -8,7 +8,7 @@ import br.com.aldenor.avaliacao.Main;
 import br.com.aldenor.avaliacao.database.DatabaseMethod;
 import br.com.aldenor.avaliacao.model.Balconista;
 import br.com.aldenor.avaliacao.model.Pessoa;
-import br.com.aldenor.avaliacao.service.Service;
+import br.com.aldenor.avaliacao.service.ServiceBalconista;
 import br.com.aldenor.avaliacao.util.Limitador_caracteres;
 
 import java.awt.event.WindowAdapter;
@@ -51,11 +51,11 @@ public class AdminPage extends javax.swing.JFrame {
                 Main.hikariConnect.closeHikariDataSource();
             }
         });
-        this.service = new Service();
+        this.service = new ServiceBalconista();
         service.updateTableCaixa(table, "Noite");
     }
 
-    private Service service;
+    private ServiceBalconista service;
 
     public String turnoSelected() {
         return (String) this.turnos.getSelectedItem();
@@ -119,6 +119,7 @@ public class AdminPage extends javax.swing.JFrame {
         Delete1 = new javax.swing.JButton();
         turnos = new javax.swing.JComboBox<>();
         Delete2 = new javax.swing.JButton();
+        registerAccountAdmin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,6 +179,12 @@ public class AdminPage extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 3, 36)); // NOI18N
         jLabel3.setText("CADASTROS");
+
+        name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Username:");
@@ -259,6 +266,13 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
 
+        registerAccountAdmin.setText("Cadastrar adminstrador");
+        registerAccountAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerAccountAdminActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -288,37 +302,36 @@ public class AdminPage extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(dias, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ano, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(75, 75, 75)
+                                .addComponent(jLabel11))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(dias, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ano, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(75, 75, 75)
-                                        .addComponent(jLabel11))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel12))
-                                        .addGap(18, 18, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12))
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(registerAccountAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,7 +386,9 @@ public class AdminPage extends javax.swing.JFrame {
                                     .addComponent(Delete2))))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(close)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(close)
+                                .addComponent(registerAccountAdmin))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -491,19 +506,22 @@ public class AdminPage extends javax.swing.JFrame {
 
     @SneakyThrows
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
-        // TODO add your handling code here:
-        int index = table.getSelectedRow();
-        int ID = (int) table.getValueAt(index, 0);
-        String name = (String) table.getValueAt(index, 1);
-        String turno = (String) table.getValueAt(index, 4);
-        String caixas = (String) table.getValueAt(index, 5);
+        try {
+            int index = table.getSelectedRow();
+            int ID = (int) table.getValueAt(index, 0);
+            String name = (String) table.getValueAt(index, 1);
+            String turno = (String) table.getValueAt(index, 4);
+            String caixas = (String) table.getValueAt(index, 5);
 
-        DatabaseMethod databaseMethod = new DatabaseMethod();
-        databaseMethod.updateAccountInformation(ID, name, caixas, turno);
-        System.out.println("Balconista com ID: " + ID + " teve seu nome e caixa atualizados.");
-        databaseMethod.closeConnection();
+            DatabaseMethod databaseMethod = new DatabaseMethod();
+            databaseMethod.updateAccountInformation(ID, name, caixas, turno);
+            System.out.println("Balconista com ID: " + ID + " teve seu nome e caixa atualizados.");
+            databaseMethod.closeConnection();
         
-        service.updateTableCaixa(table, turnoSelected());
+            service.updateTableCaixa(table, turnoSelected());
+        } catch (Exception ignored) { 
+            JOptionPane.showInternalMessageDialog(null, "Informe qual linha deve ser atualizada.", "Faltando dados...", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_UpdateActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
@@ -528,7 +546,7 @@ public class AdminPage extends javax.swing.JFrame {
             service.updateTableCaixa(table, turnoSelected());
             databaseMethod.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showInternalMessageDialog(null, "Informe qual linha deve ser deletada.", "Faltando dados...", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_Delete1ActionPerformed
 
@@ -580,6 +598,15 @@ public class AdminPage extends javax.swing.JFrame {
             Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Delete2ActionPerformed
+
+    private void registerAccountAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerAccountAdminActionPerformed
+        RegisterAdminPage registerAdminPage = new RegisterAdminPage(new javax.swing.JFrame(), true);
+        registerAdminPage.setVisible(true);
+    }//GEN-LAST:event_registerAccountAdminActionPerformed
+
+    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameActionPerformed
 
     /**
      *
@@ -648,6 +675,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField mes;
     private javax.swing.JTextField name;
     private javax.swing.JPasswordField password;
+    private javax.swing.JButton registerAccountAdmin;
     private javax.swing.JButton sortear;
     private javax.swing.JTable table;
     private javax.swing.JComboBox<String> turno;

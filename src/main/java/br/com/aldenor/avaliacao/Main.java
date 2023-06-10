@@ -6,7 +6,7 @@ package br.com.aldenor.avaliacao;
 
 import br.com.aldenor.avaliacao.database.DatabaseMethod;
 import br.com.aldenor.avaliacao.database.HikariConnect;
-import br.com.aldenor.avaliacao.model.Adminstrador;
+import br.com.aldenor.avaliacao.model.Administrador;
 import br.com.aldenor.avaliacao.model.Pessoa;
 import br.com.aldenor.avaliacao.telas.LoginPage;
 import java.sql.SQLException;
@@ -24,7 +24,7 @@ public class Main {
     
     public static void main(String[] args) throws SQLException {
         System.out.println("Iniciando banco de dados.");
-        hikariConnect.MySQLConnectLoad("127.0.0.1", "test", "root", "");
+        hikariConnect.MySQLConnectLoad("127.0.0.1:3306", "test", "root", "");
         DatabaseMethod databaseMethod = new DatabaseMethod();
         databaseMethod.createTableFuncionario();
         databaseMethod.createTableAdminstrador();
@@ -35,10 +35,11 @@ public class Main {
         databaseMethod.closeConnection();
     }
     
-    public static void generationDefaultAccountAdmin() throws SQLException {
+    @SneakyThrows
+    public static void generationDefaultAccountAdmin() {
         DatabaseMethod databaseMethod = new DatabaseMethod();
         if(!databaseMethod.hasUsernameAdminstradorAccount("admin")) {
-            Adminstrador admin = new Adminstrador("Admin", "Admin", "Admin", "Admin", "16/09/2004");
+            Administrador admin = new Administrador("Admin", "Admin", "Admin", "Admin", "16/09/2004");
             databaseMethod.setAdminstradores(admin);
         }
         databaseMethod.closeConnection();
