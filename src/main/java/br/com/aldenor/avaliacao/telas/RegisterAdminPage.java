@@ -709,8 +709,8 @@ public class RegisterAdminPage extends javax.swing.JDialog {
             return;
         }
         Administrador administrador = new Administrador(CPF, name, user, password, date);
-        if (administrador.getIdade() < 16 || administrador.getIdade() > 70) {
-            JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 16 à 70 anos. Idade: " + administrador.getIdade() + ".", 
+        if (administrador.getIdade() < 0 || administrador.getIdade() > 120) {
+            JOptionPane.showInternalMessageDialog(null, "Administrador tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 0 à 120 anos. Idade: " + administrador.getIdade() + ".",
                     "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
             return;
         }

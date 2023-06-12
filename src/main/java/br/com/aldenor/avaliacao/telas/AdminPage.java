@@ -468,8 +468,8 @@ public class AdminPage extends javax.swing.JFrame {
             return;
         }
         Balconista balconista = new Balconista(caixaString, turno, CPF, nome, user, pass, date);
-        if (balconista.getIdade() < 16 || balconista.getIdade() > 70) {
-            JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 16 à 70 anos. Idade: " + balconista.getIdade() + ".", "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
+        if (balconista.getIdade() < 0 || balconista.getIdade() > 120) {
+            JOptionPane.showInternalMessageDialog(null, "Balconista tem uma idade muito avançada, ou muito nova, a idade tem que ser entre 0 à 120 anos. Idade: " + balconista.getIdade() + ".", "Balconista invalido...", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (!balconista.isValid()) {
